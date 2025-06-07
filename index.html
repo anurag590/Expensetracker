@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Expense Tracker with Pie Chart</title>
+  <link href="style.css" rel="stylesheet">
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url("images/mybg.webp") no-repeat center center fixed;
+      background-size: cover;
+      color: #222;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 15px 40px;
+    }
+
+    /* Overlay on bg */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255 255 255 / 0.8);
+      z-index: -1;
+    }
+
+    nav {
+      width: 100%;
+      background: linear-gradient(90deg, #4b6cb7, #182848);
+      color: white;
+      padding: 18px 0;
+      font-size: 1.9rem;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      user-select: none;
+      letter-spacing: 1.5px;
+    }
+
+    main {
+      background: white;
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 8px 24px rgb(0 0 0 / 0.15);
+      padding: 30px 35px;
+      margin-top: 30px;
+    }
+
+    /* Budget section */
+    .budget-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .budget-section label {
+      flex: 1 1 150px;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .budget-section input {
+      flex: 1 1 200px;
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: 2px solid #4b6cb7;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    .budget-section input:focus {
+      outline: none;
+      border-color: #182848;
+      box-shadow: 0 0 8px #182848aa;
+    }
+
+    .budget-section button {
+      background: #4b6cb7;
+      color: white;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      flex: 0 0 auto;
+      transition: background-color 0.3s;
+    }
+    .budget-section button:hover {
+      background: #182848;
+    }
+
+    /* Summary */
+    .summary p {
+      font-size: 1.2rem;
+      margin: 6px 0;
+      font-weight: 600;
+      color: #444;
+    }
+
+    /* Expense form */
+    form#expense-form {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 30px 0;
+    }
+
+    form#expense-form input {
+      flex: 1 1 150px;
+      padding: 12px 15px;
+      font-size: 1rem;
+      border: 2px solid #4b6cb7;
+      border-radius: 10px;
+      transition: border-color 0.3s;
+    }
+    form#expense-form input:focus {
+      outline: none;
+      border-color: #182848;
+      box-shadow: 0 0 8px #182848aa;
+    }
+
+    form#expense-form button {
+      background: #4b6cb7;
+      border: none;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      flex: 0 0 120px;
+      transition: background-color 0.3s;
+    }
+    form#expense-form button:hover {
+      background: #182848;
+    }
+
+    /* Expense list */
+    #expense-list {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 20px;
+      max-height: 280px;
+      overflow-y: auto;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      background: #f8f9fa;
+    }
+    #expense-list li {
+      padding: 12px 20px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+      color: #333;
+    }
+    #expense-list li:last-child {
+      border-bottom: none;
+    }
+
+    /* Chart section */
+    .chart-section {
+      margin-top: 35px;
+      text-align: center;
+    }
+    .chart-section h2 {
+      margin-bottom: 15px;
+      color: #182848;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    canvas {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 6px 14px rgb(0 0 0 / 0.1);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      main {
+        padding: 20px 15px;
+      }
+      form#expense-form {
+        flex-direction: column;
+      }
+      form#expense-form button {
+        flex: 1 1 auto;
+      }
+      .budget-section {
+        flex-direction: column;
+      }
+      .budget-section input, .budget-section button {
+        flex: 1 1 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>Expense Tracker</nav>
+
+  <main>
+    <section class="budget-section">
+      <label for="budget">Set Monthly Budget (₹): </label>
+      <input id="budget" type="number" min="0" step="0.01" placeholder="Enter your budget">
+      <button id="set-budget-btn">Set Budget</button>
+    </section>
+
+    <section class="summary">
+      <p>Budget: ₹<span id="budget-amount">0.00</span></p>
+      <p>Total Spent: ₹<span id="total">0.00</span></p>
+      <p>Remaining: ₹<span id="remaining">0.00</span></p>
+    </section>
+
+    <form id="expense-form">
+      <input id="amount" type="number" placeholder="Amount (₹)" min="0" step="0.01" required>
+      <input id="category" type="text" placeholder="Category" required>
+      <input id="date" type="date" required>
+      <button type="submit">Add</button>
+    </form>
+
+    <ul id="expense-list"></ul>
+
+    <section class="chart-section">
+      <h2>Spending Breakdown</h2>
+      <canvas id="expenseChart" width="300" height="300"></canvas>
+    </section>
+  </main>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Your external JS file -->
+  <script src="script2.js"></script>
+</body>
+</html>

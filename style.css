@@ -1,0 +1,142 @@
+/* Updated style.css */
+
+/* Body and background */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url("images/mybg.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  filter: brightness(1.15) contrast(1.1);
+  position: relative;
+  color: black; /* dark text for contrast */
+  min-height: 100vh;
+}
+
+/* Light overlay for readability but less dark */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2); /* lighter black overlay */
+  z-index: -1;
+}
+
+/* Navigation bar full width, sticky on top */
+nav {
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  padding: 15px 0;
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  margin: 0;
+  border-radius: 0; /* remove rounded corners to cover full width */
+}
+
+/* Main container with lighter transparent background */
+.container,
+main {
+  max-width: 700px;
+  margin: 40px auto;
+  background: rgba(255, 255, 255, 0.5); /* light transparent white */
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  color: #111;
+}
+
+/* Form styling */
+form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+form input,
+form button {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  flex: 1;
+}
+
+form button {
+  background-color: #2575fc;
+  border: none;
+  color: white;
+  cursor: pointer;
+  flex: 0.6;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #6a11cb;
+}
+
+/* Expense summary styling */
+.summary p {
+  font-size: 18px;
+  margin: 5px 0;
+  font-weight: 600;
+  color: #222;
+}
+
+/* Expense list styling */
+#expense-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 30px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+#expense-list li {
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 6px;
+  margin-bottom: 8px;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Chart section */
+.chart-section {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 20px 15px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .container,
+  main {
+    margin: 20px 10px;
+    padding: 20px 15px;
+  }
+
+  form {
+    flex-direction: column;
+  }
+
+  form button {
+    flex: 1;
+  }
+}
