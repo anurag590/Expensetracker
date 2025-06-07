@@ -3,6 +3,18 @@
 Welcome to the **Expense Tracker** — a sleek and intuitive web app to help you **manage your monthly budget** and **track expenses** with ease!
 
 ---
+sample snaps : 
+
+![image](https://github.com/user-attachments/assets/85301314-f003-4175-8228-3b74299226b3)
+
+![image](https://github.com/user-attachments/assets/4c1b6bcb-c1d5-4923-b14d-b17dfe551833)
+
+![image](https://github.com/user-attachments/assets/004f2819-ca78-4b5b-89dc-d9e7bf087f6f)
+
+
+
+
+
 
 ## <i class="fas fa-rocket"></i> Project Overview
 
